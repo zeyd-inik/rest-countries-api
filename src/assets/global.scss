@@ -1,0 +1,32 @@
+/* CUSTOM FONTS  */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;800&display=swap');
+
+/*  COLORS  */
+
+/* light mode colors */
+
+$text-color: hsl(200, 15%, 8%);
+
+$background-color: hsl(0, 0%, 98%);
+
+$elements-color: hsl(0, 0%, 52%);
+
+/* dark mode colors */
+
+.dark-mode {
+    $text-color: hsl(0, 0%, 100%);
+
+    $background-color: hsl(207, 26%, 17%);
+
+    $elements-color: hsl(209, 23%, 22%);
+}
+
+/* global styles  */
+* {
+    font-family: 'Nunito Sans', sans-serif;
+    /* Weights: 300, 600, 800 */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+}
