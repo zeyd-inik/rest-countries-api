@@ -1,6 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 const props = defineProps(['country']);
+import { useCountriesStore } from '../stores/countriesStore';
+const store = useCountriesStore();
 </script>
 
 <!-- --------------------------------------- -->
@@ -11,7 +13,7 @@ const props = defineProps(['country']);
     <router-link :to="'/country-detail/' + country.ccn3">
         <div class="country-cards">
             <img :src="country.flags.svg" />
-            <div class="card-info">
+            <div class="card-info" :class="{ dark: store.darkMode }">
                 <div class="country-name">{{ country.name.common }}</div>
                 <div class="population small-text-info"><span>Population: </span>{{ country.population }}</div>
                 <div class="ragion small-text-info"><span>Region: </span>{{ country.region }}</div>
@@ -31,19 +33,31 @@ a {
 .country-cards {
     width: 264px;
     height: 336px;
+    display: flex;
+    flex-direction: column;
     border-radius: 5px;
     overflow: hidden;
-    background-color: $dark-text-color;
+    background-color: $dark-background-color;
     margin-bottom: 32px;
+    letter-spacing: 0.7px;
 
     img {
         width: 100%;
         height: 160px;
+
         object-fit: cover;
+        background-color: $dark-background-color;
     }
     .card-info {
         padding: 24px;
         color: $text-color;
+        background-color: $dark-text-color;
+        flex: 1;
+        &.dark {
+            background-color: $dark-elements-color;
+            color: $background-color;
+        }
+
         .country-name {
             font-weight: 800;
             font-size: 18px;
