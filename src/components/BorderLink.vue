@@ -18,7 +18,9 @@ console.log(cntr);
 <!-- ------------------------- -->
 <!-- ------------------------- -->
 <template>
-    <button @click="router.push('/country-detail/' + cntr.ccn3)" class="btn">{{ cntr.name.common }}</button>
+    <button :class="{ dark: store.darkMode }" @click="router.push('/country-detail/' + cntr.ccn3)" class="btn">
+        {{ cntr.name.common }}
+    </button>
 </template>
 <!-- ------------------------- -->
 <!-- ------------------------- -->
@@ -35,5 +37,14 @@ console.log(cntr);
     border-radius: 5px;
     background-color: $dark-text-color;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.4) 0px 0px 1px 0px;
+    transition: transform ease 0.3s;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+    }
+    &.dark {
+        background-color: $dark-elements-color;
+        color: $background-color;
+    }
 }
 </style>

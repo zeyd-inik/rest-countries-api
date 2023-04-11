@@ -1,10 +1,11 @@
 <script setup>
 import { useCountriesStore } from '../stores/countriesStore';
 import BorderLink from '../components/BorderLink.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { onBeforeMount, ref } from 'vue';
 const route = useRoute();
 const store = useCountriesStore();
+const router = useRouter();
 const id = route.params.id;
 const countryData = ref({});
 onBeforeMount(async () => {
@@ -19,7 +20,9 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
 <!-- --------------------------- -->
 <template>
     <div class="country-detail" :class="{ dark: store.darkMode }">
-        <button class="btn go-back"><img src="../assets/icons/left-arrow.svg" />Back</button>
+        <button :class="{ dark: store.darkMode }" class="btn go-back" @click="router.go(-1)">
+            <img src="../assets/icons/left-arrow.svg" />Back
+        </button>
         <div class="container">
             <div class="img-container">
                 <img class="flag" :src="countryData.flags.png" />
@@ -29,30 +32,43 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
                     <div class="text-container-A">
                         <div class="country-name">{{ countryData.name.common }}</div>
                         <p class="country-details">
-                            Native Name: <span>{{ Object.values(countryData.name.nativeName)[0].common }}</span>
+                            Native Name:
+                            <span :class="{ dark: store.darkMode }">{{
+                                Object.values(countryData.name.nativeName)[0].common
+                            }}</span>
                         </p>
                         <p class="country-details">
-                            Population: <span>{{ countryData.population.toLocaleString() }}</span>
+                            Population:
+                            <span :class="{ dark: store.darkMode }">{{ countryData.population.toLocaleString() }}</span>
                         </p>
                         <p class="country-details">
-                            Ragion: <span>{{ countryData.region }}</span>
+                            Ragion: <span :class="{ dark: store.darkMode }">{{ countryData.region }}</span>
                         </p>
                         <p class="country-details">
-                            Sub Ragion: <span>{{ countryData.subregion }}</span>
+                            Sub Ragion: <span :class="{ dark: store.darkMode }">{{ countryData.subregion }}</span>
                         </p>
                         <p class="country-details">
-                            Capital: <span>{{ String(Object.values(countryData.capital)) }}</span>
+                            Capital:
+                            <span :class="{ dark: store.darkMode }">{{
+                                String(Object.values(countryData.capital))
+                            }}</span>
                         </p>
                     </div>
                     <div class="text-container-B">
                         <p class="country-details">
-                            Top Level Domain: <span>{{ countryData.tld[0] }}</span>
+                            Top Level Domain: <span :class="{ dark: store.darkMode }">{{ countryData.tld[0] }}</span>
                         </p>
                         <p class="country-details">
-                            Currencies: <span>{{ Object.values(countryData.currencies)[0].name }}</span>
+                            Currencies:
+                            <span :class="{ dark: store.darkMode }">{{
+                                Object.values(countryData.currencies)[0].name
+                            }}</span>
                         </p>
                         <p class="country-details">
-                            Languages: <span>{{ String(Object.values(countryData.languages)) }}</span>
+                            Languages:
+                            <span :class="{ dark: store.darkMode }">{{
+                                String(Object.values(countryData.languages))
+                            }}</span>
                         </p>
                     </div>
                 </div>
@@ -74,10 +90,12 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
 
 <style lang="scss" scoped>
 .country-detail {
-    padding: 40px 28px;
+    padding: 14px 28px;
     color: $text-color;
     background-color: $background-color;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
+    color: $text-color;
+
     &.dark {
         background-color: $dark-background-color;
         color: $dark-text-color;
@@ -88,10 +106,15 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
         align-items: center;
         border-radius: 5px;
         padding: 7px 24px;
-        margin-bottom: 64px;
+        margin-bottom: 14px;
         border: 0;
         outline: 0;
         background-color: $dark-text-color;
+        cursor: pointer;
+        &.dark {
+            background-color: $dark-elements-color;
+            color: $dark-text-color;
+        }
 
         img {
             display: inline-block;
@@ -100,12 +123,15 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
     }
     .container {
         .img-container {
+            width: 320px;
+            height: 229px;
+            margin-bottom: 14px;
             border-radius: 8px;
             overflow: hidden;
             .flag {
-                width: 320px;
-                height: auto;
-                margin-bottom: 44px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         }
         .text-container {
@@ -115,22 +141,27 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
                     font-weight: 600;
                     span {
                         font-weight: 300;
+                        &.dark {
+                            color: $elements-color;
+                        }
                     }
                 }
                 .text-container-A {
-                    margin-bottom: 32px;
+                    margin-bottom: 12px;
                     .country-name {
                         font-size: 22px;
                         font-weight: 800;
-                        margin-bottom: 16px;
+                        margin-bottom: 12px;
                     }
                 }
             }
             .borders-container {
                 .country-details {
-                    margin-bottom: 16px;
+                    margin: 12px 0;
                     display: flex;
                     flex-wrap: wrap;
+                    font-weight: 600;
+                    font-size: 16px;
                 }
             }
         }
