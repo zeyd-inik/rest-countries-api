@@ -1,7 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-const props = defineProps(['country']);
 import { useCountriesStore } from '../stores/countriesStore';
+
+const props = defineProps(['country']);
 const store = useCountriesStore();
 </script>
 
@@ -37,16 +38,15 @@ a {
     flex-direction: column;
     border-radius: 5px;
     overflow: hidden;
-    background-color: $dark-background-color;
+
+    background-color: transparent;
     margin-bottom: 32px;
     letter-spacing: 0.7px;
 
     img {
         width: 100%;
-        height: 160px;
-
+        height: auto;
         object-fit: cover;
-        background-color: $dark-background-color;
     }
     .card-info {
         padding: 24px;

@@ -10,6 +10,7 @@ onBeforeMount(async () => {
     const data = await res.json();
     console.log(data);
     store.globalAllCountries = data;
+    console.log(data);
 });
 
 const showMenu = ref(false);

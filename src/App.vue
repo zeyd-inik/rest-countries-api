@@ -1,7 +1,8 @@
 <script setup>
-import { RouterView } from 'vue-router';
-
+import { RouterView, useRoute } from 'vue-router';
 import TheHeader from './components/TheHeader.vue';
+
+const route = useRoute();
 </script>
 <!-- ----------------------------------------------- -->
 <!-- ----------------------------------------------- -->
@@ -10,7 +11,7 @@ import TheHeader from './components/TheHeader.vue';
 <template>
     <div class="app">
         <TheHeader />
-        <RouterView />
+        <RouterView :key="route.path" />
     </div>
 </template>
 <!-- ----------------------------------------------- -->
