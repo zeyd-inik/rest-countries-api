@@ -114,7 +114,7 @@ const lowercasedQuery = computed(() => {
     </div>
 </template>
 <!-- -------------------------- -->
-h
+
 <!-- -------------------------- -->
 <!-- -------------------------- -->
 
@@ -128,9 +128,19 @@ h
         background-color: $dark-background-color;
     }
     .filter-container {
+        @media (min-width: 1440px) {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 65px;
+            padding-right: 65px;
+        }
         .input-container {
             position: relative;
             margin-bottom: 40px;
+            @media (min-width: 1440px) {
+                width: 480px;
+                padding: 14px 0 14px 0px;
+            }
 
             input[type='text'] {
                 width: 100%;
@@ -144,6 +154,9 @@ h
                 box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
                 outline: none;
                 transition: box-shadow 0.3s ease;
+                @media (min-width: 1440px) {
+                    width: 480px;
+                }
                 &.dark {
                     background-color: $dark-elements-color;
                     color: $elements-color;
@@ -251,10 +264,11 @@ h
     }
     .cards-container {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         margin-top: 40px;
+        gap: 75px;
     }
 }
 </style>

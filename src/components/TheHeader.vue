@@ -38,6 +38,10 @@ header {
     background-color: $dark-text-color;
     font-weight: 800;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    @media (min-width: 1440px) {
+        padding-left: 81px;
+        padding-right: 81px;
+    }
     &.dark {
         background-color: $dark-elements-color;
     }
