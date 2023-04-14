@@ -8,6 +8,7 @@ const store = useCountriesStore();
 
 const changeMode = () => {
     store.darkMode = !store.darkMode;
+    localStorage.setItem('darkMode', JSON.stringify(store.darkMode));
 };
 </script>
 <!-- ------------------------------------------ -->

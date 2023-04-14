@@ -1,6 +1,8 @@
 <script setup>
-import { RouterView, useRoute } from 'vue-router';
 import TheHeader from './components/TheHeader.vue';
+import { useCountriesStore } from './stores/countriesStore';
+import { RouterView, useRoute } from 'vue-router';
+const store = useCountriesStore();
 
 const route = useRoute();
 </script>

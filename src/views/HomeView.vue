@@ -1,7 +1,7 @@
 <script setup>
 import CountryCard from '@/components/CountryCard.vue';
 import { useCountriesStore } from '@/stores/countriesStore';
-import { ref, computed, onBeforeMount, watch, nextTick } from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
 
 const store = useCountriesStore();
 
@@ -14,6 +14,12 @@ const selectSearch = ref(false);
 const selectMenuText = ref('Filter by Region');
 
 onBeforeMount(async () => {
+    if (localStorage.getItem('darkMode')) {
+        store.darkMode = JSON.parse(localStorage.getItem('darkMode'));
+    } else {
+        localStorage.setItem('darkMode', JSON.stringify(store.darkMode));
+    }
+
     const res = await fetch('https://restcountries.com/v3.1/all');
     allCountries.value = await res.json();
     store.globalAllCountries = allCountries.value;
