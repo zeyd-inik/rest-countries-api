@@ -1,51 +1,106 @@
 <script setup>
-import { useCountriesStore } from '@/stores/countriesStore';
 import CountryCard from '@/components/CountryCard.vue';
-import { ref, onBeforeMount } from 'vue';
+import { useCountriesStore } from '@/stores/countriesStore';
+import { ref, computed, onBeforeMount, watch, nextTick } from 'vue';
+
 const store = useCountriesStore();
 
-const URL = 'https://restcountries.com/v3.1/all';
-onBeforeMount(async () => {
-    const res = await fetch(URL);
-    const data = await res.json();
-    console.log(data);
-    store.globalAllCountries = data;
-    console.log(data);
-});
+const query = ref('');
+const allCountries = ref([]);
 
 const showMenu = ref(false);
+const selectSearch = ref(false);
+
+const selectMenuText = ref('Filter by Region');
+
+onBeforeMount(async () => {
+    const res = await fetch('https://restcountries.com/v3.1/all');
+    allCountries.value = await res.json();
+    store.globalAllCountries = allCountries.value;
+    console.log(allCountries.value);
+});
+
+const toggleMenu = () => {
+    showMenu.value = !showMenu.value;
+};
+const selectHandle = (e) => {
+    selectSearch.value = true;
+
+    selectMenuText.value.innerText = e.target.innerText;
+    selectMenuText.value = e.target.innerText;
+    showMenu.value = false;
+};
+const inputHandle = () => {
+    if (query.value) {
+        selectSearch.value = false;
+
+        selectMenuText.value.innerText = 'All';
+    }
+};
+
+const inputFilteredCountries = computed(() => {
+    if (lowercasedQuery.value !== '' && lowercasedQuery.value) {
+        return allCountries.value.filter((country) => {
+            return country.name.common.toLowerCase().includes(lowercasedQuery.value);
+        });
+    }
+    return allCountries.value;
+});
+const SelectFilteredCountries = computed(() => {
+    if (selectMenuText.value.innerText === 'All') {
+        return allCountries.value;
+    }
+    return allCountries.value.filter((country) => {
+        return country.region === selectMenuText.value.innerText;
+    });
+});
+
+const lowercasedQuery = computed(() => {
+    return query.value.toLocaleLowerCase();
+});
 </script>
 <!-- -------------------------- -->
 <!-- -------------------------- -->
 <!-- -------------------------- -->
 <template>
-    <div class="home" :class="{ dark: store.darkMode }">
+    <div class="home" :class="{ dark: store.darkMode }" @click="showMenu = false">
         <div class="filter-container">
             <div class="input-container">
                 <img src="../assets/icons/search.svg" class="search" :class="{ dark: store.darkMode }" />
-                <input :class="{ dark: store.darkMode }" type="text" placeholder="Search for country..." />
+                <input
+                    :class="{ dark: store.darkMode }"
+                    type="text"
+                    placeholder="Search for country..."
+                    v-model.trim="query"
+                    @input="inputHandle"
+                />
             </div>
+
             <div class="drop-menu-container">
-                <div class="drop-menu-select" :class="{ dark: store.darkMode }" @click="showMenu = !showMenu">
-                    Filter by Region<img
-                        src="../assets/icons/bottom-arrow.svg"
-                        :class="{ dark: store.darkMode }"
-                        class="arrow"
-                    />
+                <div class="drop-menu-select" :class="{ dark: store.darkMode }" @click.stop="toggleMenu">
+                    <p ref="selectMenuText">Filter by Region</p>
+                    <img src="../assets/icons/bottom-arrow.svg" :class="{ dark: store.darkMode }" class="arrow" />
                 </div>
-                <div v-if="showMenu" class="drop-menu-options" :class="{ dark: store.darkMode }">
-                    <div class="drop-menu-option">All</div>
-                    <div class="drop-menu-option">Africa</div>
-                    <div class="drop-menu-option">Americas</div>
-                    <div class="drop-menu-option">Asia</div>
-                    <div class="drop-menu-option">Europe</div>
-                    <div class="drop-menu-option">Oceania</div>
+                <div class="drop-menu-options" :class="{ dark: store.darkMode }" @click.stop v-if="showMenu">
+                    <div class="drop-menu-option" @click="selectHandle">All</div>
+                    <div class="drop-menu-option" @click="selectHandle">Africa</div>
+                    <div class="drop-menu-option" @click="selectHandle">Americas</div>
+                    <div class="drop-menu-option" @click="selectHandle">Asia</div>
+                    <div class="drop-menu-option" @click="selectHandle">Europe</div>
+                    <div class="drop-menu-option" @click="selectHandle">Oceania</div>
                 </div>
             </div>
         </div>
         <div class="cards-container">
             <country-card
-                v-for="country in store.globalAllCountries"
+                v-if="selectSearch"
+                v-for="country in SelectFilteredCountries"
+                :key="country.ccn3"
+                :country="country"
+            ></country-card>
+            <country-card
+                v-else
+                v-for="country in inputFilteredCountries"
                 :key="country.ccn3"
                 :country="country"
             ></country-card>
@@ -53,6 +108,7 @@ const showMenu = ref(false);
     </div>
 </template>
 <!-- -------------------------- -->
+h
 <!-- -------------------------- -->
 <!-- -------------------------- -->
 

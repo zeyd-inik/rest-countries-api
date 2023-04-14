@@ -16,7 +16,9 @@ const store = useCountriesStore();
             <img :src="country.flags.svg" />
             <div class="card-info" :class="{ dark: store.darkMode }">
                 <div class="country-name">{{ country.name.common }}</div>
-                <div class="population small-text-info"><span>Population: </span>{{ country.population }}</div>
+                <div class="population small-text-info">
+                    <span>Population: </span>{{ country.population.toLocaleString() }}
+                </div>
                 <div class="ragion small-text-info"><span>Region: </span>{{ country.region }}</div>
                 <div class="capital small-text-info"><span>Capital: </span>{{ String(country.capital) }}</div>
             </div>

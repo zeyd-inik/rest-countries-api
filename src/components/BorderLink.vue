@@ -11,8 +11,6 @@ const props = defineProps(['borderName']);
 const cntr = JSON.parse(JSON.stringify(store.globalAllCountries)).find((country) => {
     return country.cca3 === props.borderName;
 });
-
-console.log(cntr);
 </script>
 <!-- ------------------------- -->
 <!-- ------------------------- -->
@@ -32,7 +30,7 @@ console.log(cntr);
     min-width: 96px;
     margin-right: 10px;
     margin-bottom: 8px;
-    padding: 3px 5px;
+    padding: 5px;
     border: none;
     border-radius: 5px;
     background-color: $dark-text-color;

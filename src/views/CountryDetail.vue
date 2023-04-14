@@ -73,7 +73,8 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
                     </div>
                 </div>
                 <div class="borders-container">
-                    <p class="country-details">Border Countries:</p>
+                    <p v-if="countryData.borders" class="country-details">Border Countries:</p>
+
                     <border-link
                         v-for="borderName in countryData.borders"
                         :key="countryData.ccn3"
@@ -93,7 +94,7 @@ console.log(JSON.parse(JSON.stringify(countryData.value)));
     padding: 14px 28px;
     color: $text-color;
     background-color: $background-color;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 79px);
     color: $text-color;
 
     &.dark {
